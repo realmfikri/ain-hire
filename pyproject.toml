@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ioh-ai-interviewer"
+version = "0.1.0"
+description = "Mobile-first AI voice interviewer prototype for IOH direct sales screening."
+requires-python = ">=3.11,<3.13"
+dependencies = [
+  "streamlit>=1.50.0,<2",
+  "pydantic==2.13.4",
+  "google-adk==1.33.0",
+  "google-cloud-aiplatform[agent-engines]==1.158.0",
+  "google-genai==1.75.0",
+  "google-cloud-bigquery==3.42.0",
+  "google-cloud-storage>=2.19.0",
+  "google-cloud-speech>=2.32.0",
+  "google-cloud-texttospeech>=2.21.0",
+  "cloudpickle==3.1.2",
+  "numpy==2.4.6",
+  "pytest>=8.3.0,<9",
+]
+
+[tool.setuptools.packages.find]
+include = ["ioh_hire*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-q"
