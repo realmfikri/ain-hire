@@ -10,7 +10,7 @@ from typing import Protocol
 from pydantic import ValidationError
 
 from ioh_hire.config import Settings
-from ioh_hire.interview.content import PRODUCT_CONTEXT, ROLE_NAME, SCORING_RUBRIC
+from ioh_hire.interview.content import PRODUCT_CONTEXT, ROLE_ID, ROLE_NAME, SCORING_RUBRIC
 from ioh_hire.interview.state_machine import TranscriptTurn
 from ioh_hire.schema import (
     COMPETENCY_NAMES,
@@ -73,10 +73,21 @@ class GeminiScoringEngine:
             raw_text = response.text or ""
             try:
                 data = json.loads(_extract_json(raw_text))
-                if latency_flag and "implausibly_fast_response" not in data.get("knockout_flags", []):
-                    data.setdefault("knockout_flags", []).append("implausibly_fast_response")
-                    if data.get("recommendation") == "PASS":
-                        data["recommendation"] = "REVIEW"
+                competencies = [
+                    CompetencyScore.model_validate(item)
+                    for item in data.get("competencies", [])
+                ]
+                recommendation, flags, ranking_score = recommendation_from_scores(
+                    competencies, latency_flag=latency_flag
+                )
+                data.update(
+                    {
+                        "competencies": competencies,
+                        "recommendation": recommendation,
+                        "knockout_flags": flags,
+                        "ranking_score": ranking_score,
+                    }
+                )
                 return InterviewResult.model_validate(data)
             except (json.JSONDecodeError, ValidationError, ValueError) as exc:
                 last_error = str(exc)
@@ -117,16 +128,14 @@ Aturan scoring:
 - Output JSON saja.
 - Semua kompetensi wajib muncul dengan nama persis:
   {", ".join(COMPETENCY_NAMES)}
-- Score 1 pada "Komunikasi & kejelasan" atau "Integritas" wajib
-  recommendation DO_NOT_PROCEED dan knockout_flags yang sesuai.
-- ranking_score 0-100 memakai bobot v0: persuasi 20, ketahanan 20,
-  komunikasi 20, discovery 15, drive 15, coachability 10. Integritas pass/fail.
+- Sistem akan menghitung recommendation, ranking_score, dan knockout_flags
+  secara deterministik; jangan mengambil keputusan aggregate sendiri.
 - evidence_quotes harus kutipan verbatim singkat dari transkrip kandidat.
 - Jika bukti kurang, set score null dan insufficient_evidence true.
 
 session_id: {session_id}
 candidate_id: {candidate_id}
-role: direct_sales_xlsatu
+role: {ROLE_ID}
 interview_duration_sec: {duration_sec}
 
 Transkrip JSON:

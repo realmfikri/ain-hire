@@ -69,6 +69,10 @@ Set these in `.env` or Cloud Run environment variables:
 - `AUDIO_BUCKET`
 - `IOH_HIRE_USE_STUBS=false`
 
+Setup checklist:
+
+- Verify `STT_MODEL` availability for `STT_LANGUAGE` in `STT_LOCATION` before deploy. Chirp model support is region-specific; if `chirp_2` is not supported for `id-ID` in the selected region, use a supported region or model.
+
 Apply the BigQuery schema after replacing `PROJECT_ID` in [ddl/bigquery.sql](ddl/bigquery.sql).
 
 Cloud Run example:

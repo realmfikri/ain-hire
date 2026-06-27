@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import time
 import uuid
 from dataclasses import dataclass, field
@@ -78,7 +79,9 @@ class InterviewStateMachine:
     ) -> InterviewSessionState:
         session_id = session_id or f"sess_{uuid.uuid4().hex[:12]}"
         candidate_id = candidate_id or f"cand_{uuid.uuid4().hex[:8]}"
-        persona = content.ROLEPLAY_PERSONAS[int(session_id[-1], 16) % 2] if session_id[-1].isalnum() else content.ROLEPLAY_PERSONAS[0]
+        persona = content.ROLEPLAY_PERSONAS[
+            _stable_index(session_id, len(content.ROLEPLAY_PERSONAS))
+        ]
         return InterviewSessionState(
             session_id=session_id,
             candidate_id=candidate_id,
@@ -198,7 +201,9 @@ class InterviewStateMachine:
                 Phase.ROLEPLAY,
             )
         if state.roleplay_step == 2:
-            trap = content.INTEGRITY_TRAPS[0]
+            trap = content.INTEGRITY_TRAPS[
+                _stable_index(state.session_id, len(content.INTEGRITY_TRAPS))
+            ]
             state.roleplay_step = 3
             state.integrity_trap_thrown = True
             return self._append_reply(
@@ -271,3 +276,8 @@ class InterviewStateMachine:
             "interviewer",
             Phase.COMPLETE,
         )
+
+
+def _stable_index(value: str, size: int) -> int:
+    digest = hashlib.sha256(value.encode("utf-8")).digest()
+    return int.from_bytes(digest[:4], "big") % size

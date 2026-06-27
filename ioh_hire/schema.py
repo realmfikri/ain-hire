@@ -7,6 +7,8 @@ from typing import Literal, Optional
 
 from pydantic import BaseModel, Field, field_validator, model_validator
 
+from ioh_hire.interview.content import ROLE_ID
+
 
 class Recommendation(str, Enum):
     PASS = "PASS"
@@ -42,7 +44,7 @@ class CompetencyScore(BaseModel):
 class InterviewResult(BaseModel):
     session_id: str
     candidate_id: str
-    role: str = "direct_sales_xlsatu"
+    role: str = ROLE_ID
     competencies: list[CompetencyScore]
     knockout_flags: list[str] = Field(default_factory=list)
     recommendation: Recommendation
@@ -55,13 +57,17 @@ class InterviewResult(BaseModel):
 
     @model_validator(mode="after")
     def enforce_knockouts(self) -> "InterviewResult":
-        names = {score.name.lower(): score for score in self.competencies}
-        communication = names.get("komunikasi & kejelasan")
-        integrity = names.get("integritas")
+        names = {_normalize_competency_name(score.name): score for score in self.competencies}
+        communication = names.get(_normalize_competency_name("Komunikasi & kejelasan"))
+        integrity = names.get(_normalize_competency_name("Integritas"))
         has_knockout_score = any(
             score is not None
             and score.score == 1
-            and score.name.lower() in {"komunikasi & kejelasan", "integritas"}
+            and _normalize_competency_name(score.name)
+            in {
+                _normalize_competency_name("Komunikasi & kejelasan"),
+                _normalize_competency_name("Integritas"),
+            }
             for score in [communication, integrity]
         )
         if has_knockout_score and self.recommendation != Recommendation.DO_NOT_PROCEED:
@@ -94,11 +100,11 @@ WEIGHTS = {
 def ranking_score_from_competencies(competencies: list[CompetencyScore]) -> int:
     """Compute the v0 weighted shortlist score, excluding integrity pass/fail."""
 
-    by_name = {item.name: item for item in competencies}
+    by_name = {_normalize_competency_name(item.name): item for item in competencies}
     total_weight = sum(WEIGHTS.values())
     points = 0.0
     for name, weight in WEIGHTS.items():
-        item = by_name.get(name)
+        item = by_name.get(_normalize_competency_name(name))
         if item is None or item.score is None or item.insufficient_evidence:
             score = 2
         else:
@@ -110,14 +116,14 @@ def ranking_score_from_competencies(competencies: list[CompetencyScore]) -> int:
 def recommendation_from_scores(
     competencies: list[CompetencyScore], latency_flag: bool = False
 ) -> tuple[Recommendation, list[str], int]:
-    by_name = {item.name: item for item in competencies}
+    by_name = {_normalize_competency_name(item.name): item for item in competencies}
     flags: list[str] = []
 
-    communication = by_name.get("Komunikasi & kejelasan")
+    communication = by_name.get(_normalize_competency_name("Komunikasi & kejelasan"))
     if communication and communication.score == 1:
         flags.append("communication_knockout")
 
-    integrity = by_name.get("Integritas")
+    integrity = by_name.get(_normalize_competency_name("Integritas"))
     if integrity and integrity.score == 1:
         flags.append("integrity_breach")
 
@@ -134,3 +140,7 @@ def recommendation_from_scores(
     if ranking_score >= 45:
         return Recommendation.REVIEW, flags, ranking_score
     return Recommendation.DO_NOT_PROCEED, flags, ranking_score
+
+
+def _normalize_competency_name(name: str) -> str:
+    return name.strip().casefold()

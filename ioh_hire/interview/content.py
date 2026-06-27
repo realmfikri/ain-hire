@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+ROLE_ID = "direct_sales_home_internet"
 ROLE_NAME = "Direct Sales - Indosat HiFi"
 
 CONSENT_TEXT = (

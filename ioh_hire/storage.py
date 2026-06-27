@@ -10,6 +10,7 @@ from pathlib import Path
 from typing import Protocol
 
 from ioh_hire.config import Settings
+from ioh_hire.interview.content import ROLE_ID
 from ioh_hire.interview.state_machine import InterviewSessionState, TranscriptTurn
 from ioh_hire.report import build_scorecard_pdf
 from ioh_hire.schema import InterviewResult
@@ -138,7 +139,7 @@ class LocalJsonRepository:
         data["sessions"][state.session_id] = {
             "session_id": state.session_id,
             "candidate_id": state.candidate_id,
-            "role": "direct_sales_xlsatu",
+            "role": ROLE_ID,
             "started_at": _iso(state.started_at),
             "completed_at": _iso(state.completed_at) if state.completed_at else None,
             "status": "started",
@@ -240,7 +241,7 @@ class BigQueryRepository:
         row = {
             "session_id": state.session_id,
             "candidate_id": state.candidate_id,
-            "role": "direct_sales_xlsatu",
+            "role": ROLE_ID,
             "started_at": _iso(state.started_at),
             "completed_at": None,
             "status": "started",

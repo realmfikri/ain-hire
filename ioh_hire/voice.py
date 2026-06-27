@@ -51,10 +51,17 @@ class GoogleCloudVoiceProvider:
     def __init__(self, settings: Settings):
         self.settings = settings
 
+        from google.api_core.client_options import ClientOptions
         from google.cloud import speech_v2, texttospeech
 
         self._speech_v2 = speech_v2
-        self._stt_client = speech_v2.SpeechClient()
+        if settings.stt_location == "global":
+            self._stt_client = speech_v2.SpeechClient()
+        else:
+            endpoint = f"{settings.stt_location}-speech.googleapis.com"
+            self._stt_client = speech_v2.SpeechClient(
+                client_options=ClientOptions(api_endpoint=endpoint)
+            )
         self._tts = texttospeech
         self._tts_client = texttospeech.TextToSpeechClient()
 
