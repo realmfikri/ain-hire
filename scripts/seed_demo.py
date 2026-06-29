@@ -8,21 +8,21 @@ import wave
 from io import BytesIO
 from pathlib import Path
 
-os.environ.setdefault("IOH_HIRE_USE_STUBS", "true")
+os.environ.setdefault("AIN_HIRE_USE_STUBS", "true")
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from ioh_hire.config import get_settings
-from ioh_hire.interview.state_machine import InterviewStateMachine
-from ioh_hire.scoring import HeuristicScoringEngine, has_implausibly_fast_answers
-from ioh_hire.storage import build_object_store, build_repository
+from ain_hire.config import get_settings
+from ain_hire.interview.state_machine import InterviewStateMachine
+from ain_hire.scoring import HeuristicScoringEngine, has_implausibly_fast_answers
+from ain_hire.storage import build_object_store, build_repository
 
 
 ANSWERS = [
     "Nama saya Andi. Saya lulusan SMK dan pernah bantu jualan keluarga, jadi saya terbiasa ketemu orang dan tertarik kerja sales lapangan internet rumah.",
     "Saya suka pekerjaan yang ada target karena hasilnya jelas. Saya juga senang ngobrol dengan orang baru dan belajar cara menjelaskan manfaat produk dengan sederhana.",
     "Pernah saya tawarkan barang dagangan tapi banyak yang menolak. Saya tetap sopan, tanya alasannya, lalu coba lagi ke orang berikutnya sambil memperbaiki cara bicara.",
-    "Tok tok, selamat sore Bu. Saya Andi dari Indosat HiFi. Boleh tahu di rumah internet biasanya dipakai untuk apa saja, misalnya kerja, belajar anak, atau nonton?",
-    "Saya paham Bu sudah pakai provider lain. Kalau boleh, kendala yang sering dirasakan apa? Indosat HiFi bisa jadi pilihan kalau Ibu butuh koneksi rumah yang stabil untuk keluarga.",
+    "Tok tok, selamat sore Bu. Saya Andi dari XL SATU. Boleh tahu di rumah internet biasanya dipakai untuk apa saja, misalnya kerja, belajar anak, atau nonton?",
+    "Saya paham Bu sudah pakai provider lain. Kalau boleh, kendala yang sering dirasakan apa? XL SATU bisa jadi pilihan kalau Ibu butuh koneksi rumah yang stabil untuk keluarga.",
     "Untuk harga dan paket saya akan cek penawaran terbaru sesuai alamat Ibu. Yang penting kita pastikan dulu kebutuhan dan coverage supaya paketnya pas.",
     "Saya tidak bisa menjamin sebelum cek coverage alamat Ibu. Untuk promo gratis juga harus saya cek dulu ketentuannya, tapi saya bisa bantu cek sekarang kalau Ibu berkenan.",
     "Boleh tahu kebutuhan internet di rumah Ibu paling sering untuk apa? Kalau untuk belajar anak dan nonton, manfaatnya koneksi rumah lebih stabil. Langkah berikutnya saya cek coverage dari alamat Ibu dan kalau cocok kita jadwalkan pemasangan.",

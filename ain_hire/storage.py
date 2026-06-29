@@ -9,11 +9,11 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Protocol
 
-from ioh_hire.config import Settings
-from ioh_hire.interview.content import ROLE_ID
-from ioh_hire.interview.state_machine import InterviewSessionState, TranscriptTurn
-from ioh_hire.report import build_scorecard_pdf
-from ioh_hire.schema import InterviewResult
+from ain_hire.config import Settings
+from ain_hire.interview.content import ROLE_ID
+from ain_hire.interview.state_machine import InterviewSessionState, TranscriptTurn
+from ain_hire.report import build_scorecard_pdf
+from ain_hire.schema import InterviewResult
 
 
 class ObjectStore(Protocol):
@@ -64,7 +64,7 @@ class LocalObjectStore:
         mime_type: str | None,
     ) -> str:
         ext = mimetypes.guess_extension(mime_type or "") or ".webm"
-        path = self.root / "ioh-hire" / session_id / "audio" / f"turn_{turn_index}{ext}"
+        path = self.root / "ain-hire" / session_id / "audio" / f"turn_{turn_index}{ext}"
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_bytes(audio_bytes)
         return str(path)
@@ -75,7 +75,7 @@ class LocalObjectStore:
         result: InterviewResult,
         transcript: list[TranscriptTurn],
     ) -> str:
-        path = self.root / "ioh-hire" / session_id / "report.pdf"
+        path = self.root / "ain-hire" / session_id / "report.pdf"
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_bytes(build_scorecard_pdf(result, transcript))
         return str(path)
@@ -96,7 +96,7 @@ class GcsObjectStore:
         audio_bytes: bytes,
         mime_type: str | None,
     ) -> str:
-        blob = self.bucket.blob(f"ioh-hire/{session_id}/audio/turn_{turn_index}.webm")
+        blob = self.bucket.blob(f"ain-hire/{session_id}/audio/turn_{turn_index}.webm")
         blob.upload_from_string(
             audio_bytes,
             content_type=mime_type or "audio/webm",
@@ -109,7 +109,7 @@ class GcsObjectStore:
         result: InterviewResult,
         transcript: list[TranscriptTurn],
     ) -> str:
-        blob = self.bucket.blob(f"ioh-hire/{session_id}/report.pdf")
+        blob = self.bucket.blob(f"ain-hire/{session_id}/report.pdf")
         blob.upload_from_string(
             build_scorecard_pdf(result, transcript),
             content_type="application/pdf",
@@ -144,7 +144,7 @@ class LocalJsonRepository:
             "completed_at": _iso(state.completed_at) if state.completed_at else None,
             "status": "started",
             "duration_sec": state.duration_sec,
-            "audio_uri_prefix": str(self.root / "ioh-hire" / state.session_id / "audio"),
+            "audio_uri_prefix": str(self.root / "ain-hire" / state.session_id / "audio"),
         }
         self._write(data)
 
@@ -246,7 +246,7 @@ class BigQueryRepository:
             "completed_at": None,
             "status": "started",
             "duration_sec": state.duration_sec,
-            "audio_uri_prefix": f"gs://{self.settings.audio_bucket_name}/ioh-hire/{state.session_id}/audio",
+            "audio_uri_prefix": f"gs://{self.settings.audio_bucket_name}/ain-hire/{state.session_id}/audio",
         }
         self._insert(self.settings.bq_table_sessions, [row])
 

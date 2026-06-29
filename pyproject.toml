@@ -3,9 +3,9 @@ requires = ["setuptools>=69", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "ioh-ai-interviewer"
+name = "ain-hire"
 version = "0.1.0"
-description = "Mobile-first AI voice interviewer prototype for IOH direct sales screening."
+description = "Mobile-first AIN Hire prototype for XLSmart direct sales screening."
 requires-python = ">=3.11,<3.13"
 dependencies = [
   "streamlit>=1.50.0,<2",
@@ -23,7 +23,7 @@ dependencies = [
 ]
 
 [tool.setuptools.packages.find]
-include = ["ioh_hire*"]
+include = ["ain_hire*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

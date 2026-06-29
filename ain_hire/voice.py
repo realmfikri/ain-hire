@@ -5,7 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Protocol
 
-from ioh_hire.config import Settings
+from ain_hire.config import Settings
 
 
 @dataclass(frozen=True)

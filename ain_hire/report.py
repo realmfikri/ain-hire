@@ -4,13 +4,13 @@ from __future__ import annotations
 
 import textwrap
 
-from ioh_hire.interview.state_machine import TranscriptTurn
-from ioh_hire.schema import InterviewResult
+from ain_hire.interview.state_machine import TranscriptTurn
+from ain_hire.schema import InterviewResult
 
 
 def build_scorecard_pdf(result: InterviewResult, transcript: list[TranscriptTurn]) -> bytes:
     lines = [
-        "IOH AI Interviewer - Recruiter Scorecard",
+        "AIN Hire - Recruiter Scorecard",
         f"Session: {result.session_id}",
         f"Candidate: {result.candidate_id}",
         f"Recommendation: {result.recommendation.value}",

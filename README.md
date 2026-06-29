@@ -1,6 +1,6 @@
-# IOH AI Interviewer
+# AIN Hire
 
-Mobile-first v0 prototype for screening entry-level Direct Sales candidates for Indosat HiFi. The app runs a short Bahasa Indonesia voice interview, scores the transcript against a sales competency rubric, persists an audit trail, and shows a ranked recruiter shortlist with human sign-off.
+Mobile-first v0 prototype for AIN Hire, an Anvaya product, screening entry-level XLSmart Direct Sales candidates for XL SATU home internet. The app runs a short Bahasa Indonesia voice interview, scores the transcript against a sales competency rubric, persists an audit trail, and shows a ranked recruiter shortlist with human sign-off.
 
 ## What is included
 
@@ -27,7 +27,7 @@ cp .env.example .env
 For local no-cost mode, keep:
 
 ```dotenv
-IOH_HIRE_USE_STUBS=true
+AIN_HIRE_USE_STUBS=true
 ```
 
 Run tests:
@@ -65,9 +65,9 @@ Set these in `.env` or Cloud Run environment variables:
 - `TTS_LANGUAGE=id-ID`
 - `TTS_VOICE_INTERVIEWER`
 - `TTS_VOICE_PERSONA`
-- `BQ_DATASET=ioh_hire`
+- `BQ_DATASET=ain_hire`
 - `AUDIO_BUCKET`
-- `IOH_HIRE_USE_STUBS=false`
+- `AIN_HIRE_USE_STUBS=false`
 
 Setup checklist:
 
@@ -78,11 +78,11 @@ Apply the BigQuery schema after replacing `PROJECT_ID` in [ddl/bigquery.sql](ddl
 Cloud Run example:
 
 ```bash
-gcloud run deploy ioh-ai-interviewer \
+gcloud run deploy ain-hire \
   --source . \
   --region "$CLOUD_RUN_REGION" \
   --service-account "$CLOUD_RUN_SERVICE_ACCOUNT" \
-  --set-env-vars IOH_HIRE_USE_STUBS=false
+  --set-env-vars AIN_HIRE_USE_STUBS=false
 ```
 
 Agent Engine deploy helper:
@@ -98,16 +98,16 @@ The deploy helper requires `GOOGLE_CLOUD_PROJECT`, `AGENT_ENGINE_REGION`, `STAGI
 GCS:
 
 ```text
-gs://$AUDIO_BUCKET/ioh-hire/{session_id}/audio/turn_{n}.webm
-gs://$AUDIO_BUCKET/ioh-hire/{session_id}/report.pdf
+gs://$AUDIO_BUCKET/ain-hire/{session_id}/audio/turn_{n}.webm
+gs://$AUDIO_BUCKET/ain-hire/{session_id}/report.pdf
 ```
 
 BigQuery tables:
 
-- `ioh_hire.sessions`
-- `ioh_hire.scores`
-- `ioh_hire.competency_scores`
-- `ioh_hire.transcripts`
+- `ain_hire.sessions`
+- `ain_hire.scores`
+- `ain_hire.competency_scores`
+- `ain_hire.transcripts`
 
 Local stub mode mirrors the same information under `.local_data/`.
 

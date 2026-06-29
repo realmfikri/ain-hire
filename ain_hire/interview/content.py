@@ -1,20 +1,20 @@
-"""Bahasa Indonesia interview IP for the IOH direct sales screen."""
+"""Bahasa Indonesia interview IP for the XLSmart direct sales screen."""
 
 from __future__ import annotations
 
-ROLE_ID = "direct_sales_home_internet"
-ROLE_NAME = "Direct Sales - Indosat HiFi"
+ROLE_ID = "direct_sales_xlsatu"
+ROLE_NAME = "Direct Sales - XL SATU"
 
 CONSENT_TEXT = (
     "Sebelum mulai, kami perlu persetujuan kamu. Wawancara ini akan direkam "
-    "dalam bentuk audio, ditranskrip, dan dinilai untuk membantu rekruter IOH "
+    "dalam bentuk audio, ditranskrip, dan dinilai untuk membantu rekruter XLSmart "
     "menentukan kandidat yang perlu dihubungi lebih lanjut. Rekaman dan "
     "transkrip dipakai hanya untuk proses rekrutmen dan audit penilaian. "
     "Keputusan akhir tetap oleh manusia, bukan otomatis oleh AI."
 )
 
 INTERVIEWER_INTRO = (
-    "Halo, saya AI Interviewer dari IOH. Kita akan ngobrol singkat sekitar "
+    "Halo, saya AI Interviewer dari AIN Hire untuk XLSmart. Kita akan ngobrol singkat sekitar "
     "delapan sampai dua belas menit. Jawab santai dalam Bahasa Indonesia "
     "sehari-hari. Dialek atau logat tidak dinilai; yang penting jawaban kamu "
     "bisa dipahami."
@@ -38,7 +38,7 @@ RESILIENCE_PROMPT = (
 
 ROLEPLAY_TRANSITION = (
     "Oke, sekarang kita coba simulasi ya. Bayangin saya penghuni rumah, kamu "
-    "lagi nawarin internet rumah Indosat HiFi dari pintu ke pintu. Mulai aja, "
+    "lagi nawarin internet rumah XL SATU dari pintu ke pintu. Mulai aja, "
     "ketok 'pintu' saya."
 )
 
@@ -50,7 +50,7 @@ COACHING_PROMPT = (
 )
 
 WRAP_PROMPT = (
-    "Terima kasih, wawancaranya sudah selesai. Tim rekrutmen IOH akan meninjau "
+    "Terima kasih, wawancaranya sudah selesai. Tim rekrutmen XLSmart akan meninjau "
     "hasilnya dan menghubungi kamu jika ada tahap berikutnya."
 )
 
@@ -65,6 +65,8 @@ ROLEPLAY_PERSONAS = ["Bu Sri", "Pak Budi"]
 
 OBJECTION_BANK = [
     "Saya udah pakai IndiHome, ngapain repot-repot pindah?",
+    "Saya udah pakai First Media, ngapain ganti?",
+    "Di kompleks sini banyak yang pakai Biznet, bedanya apa?",
     "Mahal nggak sih? Berapa per bulannya?",
     "Rumah saya kejangkau jaringannya nggak sih?",
     "Lagi sibuk nih, nanti aja deh.",
@@ -84,11 +86,14 @@ INTEGRITY_TRAPS = [
 ]
 
 PRODUCT_CONTEXT = (
-    "Indosat HiFi adalah fixed home broadband berbasis fiber untuk internet "
-    "rumah, dengan manfaat kuota mobile untuk keluarga bila paket mendukung. "
-    "Harga, promo, kontrak, instalasi, dan coverage harus dicek sesuai alamat "
-    "dan penawaran terbaru. Kandidat tidak boleh menjamin coverage, kecepatan, "
-    "harga, promo gratis, atau jadwal instalasi kalau belum diverifikasi."
+    "XL SATU adalah fixed home broadband untuk internet rumah, terutama berbasis "
+    "fiber hingga sekitar 1Gbps, dengan varian wireless Lite di area tertentu. "
+    "Paket dapat mencakup kuota mobile bersama untuk anggota rumah tangga. "
+    "Harga paket kira-kira Rp129 ribu sampai Rp499 ribu per bulan, belum termasuk "
+    "perangkat bila berlaku. Coverage bergantung alamat dan hanya tersedia di "
+    "area yang dijangkau XL SATU. Kandidat tidak boleh menjamin coverage, "
+    "kecepatan, harga, promo gratis, kontrak, atau jadwal instalasi kalau belum "
+    "diverifikasi."
 )
 
 SCORING_RUBRIC = """

@@ -5,20 +5,20 @@ from pathlib import Path
 
 import streamlit as st
 
-from ioh_hire.config import Settings, get_settings
-from ioh_hire.interview import content
-from ioh_hire.interview.state_machine import InterviewSessionState, InterviewStateMachine
-from ioh_hire.schema import InterviewResult
-from ioh_hire.scoring import build_scoring_engine, has_implausibly_fast_answers
-from ioh_hire.storage import build_object_store, build_repository
-from ioh_hire.voice import build_voice_provider
+from ain_hire.config import Settings, get_settings
+from ain_hire.interview import content
+from ain_hire.interview.state_machine import InterviewSessionState, InterviewStateMachine
+from ain_hire.schema import InterviewResult
+from ain_hire.scoring import build_scoring_engine, has_implausibly_fast_answers
+from ain_hire.storage import build_object_store, build_repository
+from ain_hire.voice import build_voice_provider
 
 
 # v0 intentionally uses Streamlit for speed and st.audio_input support.
 # v1 should move to FastAPI plus a minimal mobile web client for finer control
 # over recording codecs, resumable uploads, and unstable mobile connections.
 st.set_page_config(
-    page_title="IOH AI Interviewer",
+    page_title="AIN Hire",
     page_icon=None,
     layout="centered",
     initial_sidebar_state="collapsed",
@@ -57,8 +57,8 @@ def render_candidate(resources: dict) -> None:
     machine: InterviewStateMachine = resources["machine"]
     repository = resources["repository"]
 
-    st.title("IOH AI Interviewer")
-    st.caption("Screening awal Direct Sales - Indosat HiFi")
+    st.title("AIN Hire")
+    st.caption("Screening awal Direct Sales - XL SATU")
 
     if "interview_state" not in st.session_state:
         st.session_state.interview_state = None
@@ -77,7 +77,7 @@ def render_candidate(resources: dict) -> None:
             placeholder="contoh: cand_001",
         )
         st.info(content.CONSENT_TEXT)
-        consent = st.checkbox("Saya setuju wawancara ini direkam dan dinilai untuk proses rekrutmen IOH.")
+        consent = st.checkbox("Saya setuju wawancara ini direkam dan dinilai untuk proses rekrutmen XLSmart.")
         if st.button("Mulai wawancara", disabled=not consent):
             state = machine.new_session(candidate_id=candidate_id.strip() or None)
             repository.save_session_started(state)
@@ -285,7 +285,7 @@ def render_recruiter(resources: dict) -> None:
 
 
 def _render_audio_playback(settings: Settings, session_id: str) -> None:
-    local_audio_dir = settings.local_data_dir / "ioh-hire" / session_id / "audio"
+    local_audio_dir = settings.local_data_dir / "ain-hire" / session_id / "audio"
     if not local_audio_dir.exists():
         return
     audio_paths = sorted(Path(local_audio_dir).glob("turn_*"))

@@ -2,10 +2,10 @@
 -- Example:
 --   bq query --use_legacy_sql=false < ddl/bigquery.sql
 
-CREATE SCHEMA IF NOT EXISTS `PROJECT_ID.ioh_hire`
+CREATE SCHEMA IF NOT EXISTS `PROJECT_ID.ain_hire`
 OPTIONS(location = "asia-southeast2");
 
-CREATE TABLE IF NOT EXISTS `PROJECT_ID.ioh_hire.sessions` (
+CREATE TABLE IF NOT EXISTS `PROJECT_ID.ain_hire.sessions` (
   session_id STRING NOT NULL,
   candidate_id STRING NOT NULL,
   role STRING NOT NULL,
@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS `PROJECT_ID.ioh_hire.sessions` (
 PARTITION BY DATE(started_at)
 CLUSTER BY candidate_id, status;
 
-CREATE TABLE IF NOT EXISTS `PROJECT_ID.ioh_hire.scores` (
+CREATE TABLE IF NOT EXISTS `PROJECT_ID.ain_hire.scores` (
   session_id STRING NOT NULL,
   recommendation STRING NOT NULL,
   ranking_score INT64 NOT NULL,
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `PROJECT_ID.ioh_hire.scores` (
 PARTITION BY DATE(scored_at)
 CLUSTER BY recommendation, ranking_score;
 
-CREATE TABLE IF NOT EXISTS `PROJECT_ID.ioh_hire.competency_scores` (
+CREATE TABLE IF NOT EXISTS `PROJECT_ID.ain_hire.competency_scores` (
   session_id STRING NOT NULL,
   name STRING NOT NULL,
   score INT64,
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `PROJECT_ID.ioh_hire.competency_scores` (
 )
 CLUSTER BY session_id, name;
 
-CREATE TABLE IF NOT EXISTS `PROJECT_ID.ioh_hire.transcripts` (
+CREATE TABLE IF NOT EXISTS `PROJECT_ID.ain_hire.transcripts` (
   session_id STRING NOT NULL,
   turn_index INT64 NOT NULL,
   speaker STRING NOT NULL,

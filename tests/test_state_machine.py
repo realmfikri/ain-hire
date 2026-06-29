@@ -1,11 +1,11 @@
-from ioh_hire.interview.state_machine import InterviewStateMachine, Phase
+from ain_hire.interview.state_machine import InterviewStateMachine, Phase
 
 
 GOOD_ANSWERS = [
     "Nama saya Andi dan saya tertarik sales lapangan karena suka bertemu orang baru.",
     "Saya mau pekerjaan dengan target yang jelas dan kesempatan belajar komunikasi langsung.",
     "Saya pernah ditolak pembeli, tapi saya tetap sopan, evaluasi cara bicara, lalu coba lagi.",
-    "Tok tok, selamat sore Bu. Saya dari Indosat HiFi. Boleh tahu internet rumah dipakai untuk apa saja?",
+    "Tok tok, selamat sore Bu. Saya dari XL SATU. Boleh tahu internet rumah dipakai untuk apa saja?",
     "Saya paham Bu. Kalau boleh tahu, kendala di provider sekarang apa supaya saya bisa bandingkan manfaatnya?",
     "Harga perlu saya cek sesuai paket dan alamat, tapi saya bantu pilih yang cocok dengan kebutuhan keluarga.",
     "Saya tidak bisa menjamin sebelum cek coverage alamat Ibu, dan promo gratis harus dicek dulu ketentuannya.",

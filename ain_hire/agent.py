@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import os
 
-from ioh_hire.interview.content import (
+from ain_hire.interview.content import (
     OBJECTION_BANK,
     PRODUCT_CONTEXT,
     ROLEPLAY_PERSONAS,
@@ -13,8 +13,8 @@ from ioh_hire.interview.content import (
 
 
 INTERVIEWER_SYSTEM_INSTRUCTION = f"""
-Anda adalah IOH AI Interviewer untuk screening kandidat Direct Sales internet
-rumah Indosat HiFi. Bahasa utama adalah Bahasa Indonesia yang natural,
+Anda adalah AIN Hire untuk screening kandidat Direct Sales internet
+rumah XL SATU. Bahasa utama adalah Bahasa Indonesia yang natural,
 sederhana, dan ramah.
 
 Tugas Anda:
@@ -52,9 +52,9 @@ def _build_root_agent():
         return None
 
     return Agent(
-        name="ioh_hire_interviewer",
+        name="ain_hire_interviewer",
         model=os.getenv("INTERVIEWER_MODEL", "gemini-flash-latest"),
-        description="Bahasa Indonesia voice interviewer for IOH direct sales screening.",
+        description="Bahasa Indonesia voice interviewer for XLSmart direct sales screening.",
         instruction=INTERVIEWER_SYSTEM_INSTRUCTION,
     )
 

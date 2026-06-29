@@ -1,4 +1,4 @@
-"""Deploy the IOH interviewer ADK agent to Vertex AI Agent Engine.
+"""Deploy the AIN Hire ADK agent to Vertex AI Agent Engine.
 
 This script intentionally does not create buckets, datasets, or paid resources.
 Run it only after confirming the target GCP project and service account.
@@ -15,7 +15,7 @@ from vertexai import agent_engines
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from ioh_hire.agent import root_agent
+from ain_hire.agent import root_agent
 
 
 def _required_env(name: str) -> str:
@@ -51,7 +51,7 @@ def _build_adk_app():
 
     kwargs = {
         "agent": root_agent,
-        "app_name": "app_ioh_hire",
+        "app_name": "app_ain_hire",
     }
 
     try:
@@ -82,7 +82,7 @@ def main() -> None:
     remote_app = agent_engines.create(
         app,
         requirements=REQUIREMENTS,
-        extra_packages=["ioh_hire"],
+        extra_packages=["ain_hire"],
         service_account=SERVICE_ACCOUNT,
     )
     print(remote_app)

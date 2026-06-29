@@ -5,17 +5,17 @@ import types
 import pytest
 from pydantic import ValidationError
 
-from ioh_hire.config import Settings
-from ioh_hire.interview.content import ROLE_ID
-from ioh_hire.interview.state_machine import TranscriptTurn
-from ioh_hire.schema import (
+from ain_hire.config import Settings
+from ain_hire.interview.content import ROLE_ID
+from ain_hire.interview.state_machine import TranscriptTurn
+from ain_hire.schema import (
     COMPETENCY_NAMES,
     CompetencyScore,
     InterviewResult,
     Recommendation,
     recommendation_from_scores,
 )
-from ioh_hire.scoring import GeminiScoringEngine
+from ain_hire.scoring import GeminiScoringEngine
 
 
 def _competencies(score: int = 4):

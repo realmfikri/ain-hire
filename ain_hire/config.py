@@ -1,4 +1,4 @@
-"""Runtime configuration for the IOH AI Interviewer prototype."""
+"""Runtime configuration for the AIN Hire prototype."""
 
 from __future__ import annotations
 
@@ -56,7 +56,7 @@ class Settings:
     )
     tts_voice_persona: str = os.getenv("TTS_VOICE_PERSONA", "id-ID-Standard-A")
 
-    bq_dataset: str = os.getenv("BQ_DATASET", "ioh_hire")
+    bq_dataset: str = os.getenv("BQ_DATASET", "ain_hire")
     bq_location: str = os.getenv("BQ_LOCATION", "asia-southeast2")
     bq_table_sessions: str = os.getenv("BQ_TABLE_SESSIONS", "sessions")
     bq_table_scores: str = os.getenv("BQ_TABLE_SCORES", "scores")
@@ -68,7 +68,7 @@ class Settings:
     cloud_run_region: str = os.getenv("CLOUD_RUN_REGION", "asia-southeast2")
     invite_link_mode: str = os.getenv("INVITE_LINK_MODE", "stub")
 
-    use_stubs: bool = _bool_env("IOH_HIRE_USE_STUBS", True)
+    use_stubs: bool = _bool_env("AIN_HIRE_USE_STUBS", True)
     local_data_dir: Path = Path(os.getenv("LOCAL_DATA_DIR", ".local_data"))
 
     @property

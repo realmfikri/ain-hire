@@ -9,7 +9,7 @@ from dataclasses import dataclass, field
 from enum import Enum
 from typing import Literal
 
-from ioh_hire.interview import content
+from ain_hire.interview import content
 
 
 Speaker = Literal["interviewer", "candidate", "persona"]

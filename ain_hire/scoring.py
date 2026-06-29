@@ -1,4 +1,4 @@
-"""Scoring engines for the IOH AI Interviewer."""
+"""Scoring engines for the AIN Hire."""
 
 from __future__ import annotations
 
@@ -9,10 +9,10 @@ from typing import Protocol
 
 from pydantic import ValidationError
 
-from ioh_hire.config import Settings
-from ioh_hire.interview.content import PRODUCT_CONTEXT, ROLE_ID, ROLE_NAME, SCORING_RUBRIC
-from ioh_hire.interview.state_machine import TranscriptTurn
-from ioh_hire.schema import (
+from ain_hire.config import Settings
+from ain_hire.interview.content import PRODUCT_CONTEXT, ROLE_ID, ROLE_NAME, SCORING_RUBRIC
+from ain_hire.interview.state_machine import TranscriptTurn
+from ain_hire.schema import (
     COMPETENCY_NAMES,
     CompetencyScore,
     InterviewResult,
@@ -113,7 +113,7 @@ class GeminiScoringEngine:
             for turn in transcript
         ]
         return f"""
-Anda adalah scorer rekrutmen IOH untuk role {ROLE_NAME}. Anda BUKAN interviewer.
+Anda adalah scorer rekrutmen XLSmart untuk role {ROLE_NAME}. Anda BUKAN interviewer.
 Nilai hanya berdasarkan transkrip. Jangan menebak gender, etnis, agama, umur,
 daerah asal, atau atribut terlindungi lain. Jangan gunakan aksen, dialek,
 code-switching, atau bahasa informal sebagai penalti; nilai hanya kejelasan.
@@ -228,7 +228,7 @@ class HeuristicScoringEngine:
         if not turns:
             return _insufficient("Persuasi & framing benefit")
         benefit_terms = ["manfaat", "stabil", "lancar", "belajar", "nonton", "kerja", "keluarga", "buffering", "hemat", "lebih mudah"]
-        product_terms = ["hifi", "internet", "wifi", "fiber", "indosat"]
+        product_terms = ["xl satu", "xlsatu", "internet", "wifi", "fiber"]
         score = 2
         if any(term in lower for term in product_terms):
             score = 3

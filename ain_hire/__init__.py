@@ -1,4 +1,4 @@
-"""IOH AI Interviewer prototype package."""
+"""AIN Hire prototype package."""
 
 __all__ = ["__version__"]
 
