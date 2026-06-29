@@ -42,12 +42,12 @@ class Settings:
 
     interviewer_model: str = os.getenv("INTERVIEWER_MODEL", "gemini-flash-latest")
     interviewer_model_location: str = os.getenv("INTERVIEWER_MODEL_LOCATION", "global")
-    scorer_model: str = os.getenv("SCORER_MODEL", "gemini-2.5-flash-001")
+    scorer_model: str = os.getenv("SCORER_MODEL", "gemini-flash-latest")
     scorer_model_location: str = os.getenv("SCORER_MODEL_LOCATION", "global")
 
     stt_language: str = os.getenv("STT_LANGUAGE", "id-ID")
     stt_model: str = os.getenv("STT_MODEL", "chirp_2")
-    stt_location: str = os.getenv("STT_LOCATION", "asia-southeast2")
+    stt_location: str = os.getenv("STT_LOCATION", "asia-southeast1")
     stt_recognizer: str = os.getenv("STT_RECOGNIZER", "_")
 
     tts_language: str = os.getenv("TTS_LANGUAGE", "id-ID")

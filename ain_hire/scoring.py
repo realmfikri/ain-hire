@@ -82,10 +82,14 @@ class GeminiScoringEngine:
                 )
                 data.update(
                     {
+                        "session_id": session_id,
+                        "candidate_id": candidate_id,
+                        "role": ROLE_ID,
                         "competencies": competencies,
                         "recommendation": recommendation,
                         "knockout_flags": flags,
                         "ranking_score": ranking_score,
+                        "interview_duration_sec": duration_sec,
                     }
                 )
                 return InterviewResult.model_validate(data)
@@ -129,9 +133,39 @@ Aturan scoring:
 - Semua kompetensi wajib muncul dengan nama persis:
   {", ".join(COMPETENCY_NAMES)}
 - Sistem akan menghitung recommendation, ranking_score, dan knockout_flags
-  secara deterministik; jangan mengambil keputusan aggregate sendiri.
+  secara deterministik; jangan mengambil keputusan aggregate sendiri. Isi field
+  itu dengan placeholder: recommendation "REVIEW", ranking_score 0,
+  knockout_flags [].
 - evidence_quotes harus kutipan verbatim singkat dari transkrip kandidat.
 - Jika bukti kurang, set score null dan insufficient_evidence true.
+- confidence harus salah satu: "low", "medium", "high".
+- summary_id berisi ringkasan singkat untuk rekruter.
+- recommended_next_step berisi langkah berikutnya untuk rekruter.
+- language_clarity_note berisi catatan deskriptif; jangan menilai aksen/dialek.
+
+Struktur JSON wajib:
+{{
+  "session_id": "{session_id}",
+  "candidate_id": "{candidate_id}",
+  "role": "{ROLE_ID}",
+  "competencies": [
+    {{
+      "name": "Komunikasi & kejelasan",
+      "score": 1,
+      "insufficient_evidence": false,
+      "rationale": "Alasan singkat berbasis bukti.",
+      "evidence_quotes": ["Kutipan kandidat."]
+    }}
+  ],
+  "knockout_flags": [],
+  "recommendation": "REVIEW",
+  "ranking_score": 0,
+  "confidence": "medium",
+  "summary_id": "Ringkasan singkat.",
+  "recommended_next_step": "Langkah berikutnya.",
+  "interview_duration_sec": {duration_sec},
+  "language_clarity_note": "Dialek, aksen, code-switching, dan gaya informal tidak dipenalti."
+}}
 
 session_id: {session_id}
 candidate_id: {candidate_id}

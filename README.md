@@ -58,10 +58,10 @@ Set these in `.env` or Cloud Run environment variables:
 - `GOOGLE_CLOUD_LOCATION=global`
 - `GOOGLE_GENAI_USE_VERTEXAI=true`
 - `INTERVIEWER_MODEL=gemini-flash-latest`
-- `SCORER_MODEL=gemini-2.5-flash-001`
+- `SCORER_MODEL=gemini-flash-latest`
 - `STT_LANGUAGE=id-ID`
 - `STT_MODEL=chirp_2`
-- `STT_LOCATION=asia-southeast2`
+- `STT_LOCATION=asia-southeast1`
 - `TTS_LANGUAGE=id-ID`
 - `TTS_VOICE_INTERVIEWER`
 - `TTS_VOICE_PERSONA`
